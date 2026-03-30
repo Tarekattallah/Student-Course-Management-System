@@ -1,62 +1,59 @@
 #include "Student.h"
-#include <iostream>
-#include <algorithm>
 
-using namespace std;
-
-Person::Person() {}
-
-Person::Person(string n) : name(n) {}
-
-string Person::getName() const {
-    return name;
+Student::Student()
+    : Person("", ""), m_id(0), m_GPA(0.0) {
 }
 
-void Person::setName(string n) {
-    name = n;
+Student::Student(int id, double gpa, string name, string email)
+    : Person(name, email), m_id(id), m_GPA(gpa) {
 }
 
-Student::Student(int i, string n, double g) : Person(n), id(i), gpa(g) {}
-
-int Student::getId() const {
-    return id;
+void Student::SetId(int id)
+{
+    m_id = id;
 }
 
-double Student::getGpa() const {
-    return gpa;
+void Student::SetGPA(double gpa)
+{
+    m_GPA = gpa;
 }
 
-void Student::setGpa(double g) {
-    if (g >= 0.0 && g <= 4.0) {
-        gpa = g;
-    }
-    else {
-        cout << "Error: GPA must be between 0.0 and 4.0\n";
-    }
+void Student::EnrollCourse(string course)
+{
+    courses.insert(course);   // set ignores duplicates automatically
 }
 
-vector<string> Student::getCourses() const {
+int Student::GetId() const
+{
+    return m_id;
+}
+
+double Student::GetGPA() const
+{
+    return m_GPA;
+}
+
+set<string> Student::GetCourse() const
+{
     return courses;
 }
 
-void Student::enrollCourse(string course) {
-    for (size_t i = 0; i < courses.size(); i++) {
-        if (courses[i] == course) {
-            cout << "This course is already enrolled!\n";
-            return;
-        }
+void Student::display() const
+{
+    cout << "\t ----------------------------------\n";
+    cout << "\t  ID    : " << m_id << "\n";
+    cout << "\t  Name  : " << m_name << "\n";
+    cout << "\t  GPA   : " << m_GPA << "\n";
+    cout << "\t  Courses: ";
+    if (courses.empty())
+    {
+        cout << "None\n";
     }
-    courses.push_back(course);
-    cout << "Enrolled in course: " << course << endl;
-}
-
-void Student::displayCourses() const {
-    if (courses.empty()) {
-        cout << "Student is not enrolled in any courses\n";
-        return;
+    else
+    {
+        for (const string& c : courses)
+            cout << c << "  ";
+        cout << "\n";
     }
-    cout << "Courses of student " << name << ":\n";
-    for (size_t i = 0; i < courses.size(); i++) {
-        cout << " - " << courses[i] << endl;
-    }
+    cout << "\t ----------------------------------\n";
 }

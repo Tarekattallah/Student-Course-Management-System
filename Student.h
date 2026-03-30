@@ -1,26 +1,31 @@
-#ifndef STUDENT_H
-#define STUDENT_H
-
+#pragma once
+#ifndef STUDENT_H_
+#define STUDENT_H_
 #include "Person.h"
-#include <vector>
+#include <set>
 #include <string>
+using namespace std;
 
-class Student : public Person {
+class Student : public Person
+{
 private:
-    int id;
-    double gpa;
-    std::vector<std::string> courses;
+    int m_id;
+    double m_GPA;
+    set<string> courses;
 
 public:
-    Student(int i, std::string n, double g);
+    Student();
+    Student(int id, double gpa, string name, string email = "");
 
-    int getId() const;
-    double getGpa() const;
-    void setGpa(double g);
-    std::vector<std::string> getCourses() const;
+    void SetId(int id);
+    void SetGPA(double gpa);
+    void EnrollCourse(string course);
 
-    void enrollCourse(std::string course);
-    void displayCourses() const;
+    int  GetId() const;
+    double GetGPA() const;
+    set<string> GetCourse() const;
+
+    void display() const override;
 };
 
 #endif
